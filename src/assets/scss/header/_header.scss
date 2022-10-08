@@ -1,0 +1,44 @@
+.nav {
+    padding: 17px 0;
+    background: black;
+
+    & .logo a {
+        color: white;
+    }
+
+    &__wrap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+
+    &__menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 72px;
+    }
+
+    & .menu__link {
+        color: white;
+        font-family: "MM", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 22px;
+        letter-spacing: 0em;
+        text-align: left;
+
+        &:hover {
+            font-weight: 600;
+        }
+    }
+    & .icon{
+           font-size: 30px;
+           color: white;
+           transition: 0.3s;
+           &:hover{
+                color: #2F4EEE;
+           }
+    }
+}
