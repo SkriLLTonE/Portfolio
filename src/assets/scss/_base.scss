@@ -18,3 +18,15 @@ body {
     font-family: 'MR', sans-serif;
     color: white;
 }
+
+html {
+    height: 100%;
+  
+    cursor: move;
+}
+
+body {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
