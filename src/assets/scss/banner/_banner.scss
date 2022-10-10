@@ -35,5 +35,9 @@
         line-height: 17px;
         background: linear-gradient(175.06deg, #3841EB 3.68%, #0889FC 48.29%, #3841EB 95.77%);
         border-radius: 100px;
+        transition: 0.3s;
+        &:hover {
+            transform: scale(1.2);
+        }
     }
 }
