@@ -1,20 +1,24 @@
 .about {
     padding: 159px 0 100px;
     position: relative;
+    overflow: hidden;
 
     &__h {
         font-family: 'MM', sans-serif;
-        font-size: 40px;
+        font-size: calc(1.5625rem + ((1vw - 3.2px) * 0.9375));
+
         font-weight: 600;
         line-height: 49px;
         text-align: center;
         color: white;
         margin-bottom: 60px;
     }
-    &__desc-h{
+
+    &__desc-h {
         margin-bottom: 15px;
         font-size: 25px;
         font-weight: 400;
+        line-height: 40px;
     }
 
     &__wrap {
@@ -30,17 +34,20 @@
 
     &__desc {
         font-family: 'MR', sans-serif;
-        font-size: 24px;
+
         font-weight: 400;
         line-height: 29px;
         max-width: 630px;
         width: 100%;
-        &__h{
+
+        &__h {
             margin-bottom: 20px;
+            font-size: calc(1.125rem + ((1vw - 3.2px) * 0.375));
         }
+
         & p {
-            font-size: 18px;
             margin-bottom: 10px;
+            font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.5625));
         }
     }
 
@@ -65,15 +72,36 @@
     }
 
     &__img {
-
         max-width: 410px;
         width: 100%;
-        height: 100%;
+
         & img {
             width: 100%;
             height: 550px;
             object-fit: cover;
         }
     }
-    
+
+}
+
+@media screen and (max-width:992px) {
+    .about {
+        padding: 60px 0;
+
+        &__wrap {
+            flex-wrap: wrap;
+        }
+
+        &:last-child .about__wrap {
+            flex-direction: row;
+        }
+    }
+}
+
+@media screen and (max-width:568px) {
+    .about__img img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 }

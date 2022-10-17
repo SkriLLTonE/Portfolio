@@ -16,7 +16,7 @@
 
     &__h {
         font-family: 'MB', sans-serif;
-        font-size: 60px;
+        font-size: calc(1.25rem + ((1vw - 3.2px) * 2.5));
         font-weight: 700;
         text-align: center;
     }
@@ -44,3 +44,4 @@
     height: 100%;
     cursor: auto;
 }
+
