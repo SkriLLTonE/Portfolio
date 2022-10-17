@@ -1,7 +1,7 @@
-var num = 200;
+var num = 5;
 var w = window.innerWidth;
 var h = window.innerHeight;
-var max = 100;
+var max = 5;
 var _x = 0;
 var _y = 0;
 var _z = 150;
@@ -259,7 +259,6 @@ var trans = {
       this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
     }.bind(this));
     window.addEventListener('touchmove',function(e){
-      e.preventDefault();
       this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
       this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
     }.bind(this));
