@@ -19,6 +19,7 @@
         font-size: calc(1.25rem + ((1vw - 3.2px) * 2.5));
         font-weight: 700;
         text-align: center;
+        max-width: 890px;
     }
 
     &__btn {
@@ -34,6 +35,7 @@
 
         &:hover {
             transform: scale(1.2);
+            
         }
     }
 }

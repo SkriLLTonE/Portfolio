@@ -1,29 +1,29 @@
-var num = 5;
+var num = 3;
 var w = window.innerWidth;
 var h = window.innerHeight;
 var max = 5;
 var _x = 0;
 var _y = 0;
 var _z = 150;
-var dtr = function(d) {
+var dtr = function (d) {
   return d * Math.PI / 180;
 };
 
-var rnd = function() {
+var rnd = function () {
   return Math.sin(Math.floor(Math.random() * 360) * Math.PI / 180);
 };
-var dist = function(p1, p2, p3) {
+var dist = function (p1, p2, p3) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2) + Math.pow(p2.z - p1.z, 2));
 };
 
 var cam = {
-  obj: { x: _x,y: _y, z: _z},
-  dest: {x: 0, y: 0,z: 1},
-  dist: {x: 0,y: 0,z: 200},
-  ang: {cplane: 0,splane: 0,ctheta: 0,stheta: 0},
+  obj: { x: _x, y: _y, z: _z },
+  dest: { x: 0, y: 0, z: 1 },
+  dist: { x: 0, y: 0, z: 200 },
+  ang: { cplane: 0, splane: 0, ctheta: 0, stheta: 0 },
   zoom: 1,
-  disp: {x: w / 2,y: h / 2,z: 0},
-  upd: function() {
+  disp: { x: w / 2, y: h / 2, z: 0 },
+  upd: function () {
     cam.dist.x = cam.dest.x - cam.obj.x;
     cam.dist.y = cam.dest.y - cam.obj.y;
     cam.dist.z = cam.dest.z - cam.obj.z;
@@ -36,7 +36,7 @@ var cam = {
 
 var trans = {
   parts: {
-    sz: function(p, sz) {
+    sz: function (p, sz) {
       return {
         x: p.x * sz.x,
         y: p.y * sz.y,
@@ -44,21 +44,21 @@ var trans = {
       };
     },
     rot: {
-      x: function(p, rot) {
+      x: function (p, rot) {
         return {
           x: p.x,
           y: p.y * Math.cos(dtr(rot.x)) - p.z * Math.sin(dtr(rot.x)),
           z: p.y * Math.sin(dtr(rot.x)) + p.z * Math.cos(dtr(rot.x))
         };
       },
-      y: function(p, rot) {
+      y: function (p, rot) {
         return {
           x: p.x * Math.cos(dtr(rot.y)) + p.z * Math.sin(dtr(rot.y)),
           y: p.y,
           z: -p.x * Math.sin(dtr(rot.y)) + p.z * Math.cos(dtr(rot.y))
         };
       },
-      z: function(p, rot) {
+      z: function (p, rot) {
         return {
           x: p.x * Math.cos(dtr(rot.z)) - p.y * Math.sin(dtr(rot.z)),
           y: p.x * Math.sin(dtr(rot.z)) + p.y * Math.cos(dtr(rot.z)),
@@ -66,7 +66,7 @@ var trans = {
         };
       }
     },
-    pos: function(p, pos) {
+    pos: function (p, pos) {
       return {
         x: p.x + pos.x,
         y: p.y + pos.y,
@@ -75,21 +75,21 @@ var trans = {
     }
   },
   pov: {
-    plane: function(p) {
+    plane: function (p) {
       return {
         x: p.x * cam.ang.cplane + p.z * cam.ang.splane,
         y: p.y,
         z: p.x * -cam.ang.splane + p.z * cam.ang.cplane
       };
     },
-    theta: function(p) {
+    theta: function (p) {
       return {
         x: p.x,
         y: p.y * cam.ang.ctheta - p.z * cam.ang.stheta,
         z: p.y * cam.ang.stheta + p.z * cam.ang.ctheta
       };
     },
-    set: function(p) {
+    set: function (p) {
       return {
         x: p.x - cam.obj.x,
         y: p.y - cam.obj.y,
@@ -97,7 +97,7 @@ var trans = {
       };
     }
   },
-  persp: function(p) {
+  persp: function (p) {
     return {
       x: p.x * cam.dist.z / p.z * cam.zoom,
       y: p.y * cam.dist.z / p.z * cam.zoom,
@@ -105,7 +105,7 @@ var trans = {
       p: cam.dist.z / p.z
     };
   },
-  disp: function(p, disp) {
+  disp: function (p, disp) {
     return {
       x: p.x + disp.x,
       y: -p.y + disp.y,
@@ -113,7 +113,7 @@ var trans = {
       p: p.p
     };
   },
-  steps: function(_obj_, sz, rot, pos, disp) {
+  steps: function (_obj_, sz, rot, pos, disp) {
     var _args = trans.parts.sz(_obj_, sz);
     _args = trans.parts.rot.x(_args, rot);
     _args = trans.parts.rot.y(_args, rot);
@@ -128,9 +128,9 @@ var trans = {
   }
 };
 
-(function() {
+(function () {
   "use strict";
-  var threeD = function(param) {
+  var threeD = function (param) {
     this.transIn = {};
     this.transOut = {};
     this.transIn.vtx = (param.vtx);
@@ -139,7 +139,7 @@ var trans = {
     this.transIn.pos = (param.pos);
   };
 
-  threeD.prototype.vupd = function() {
+  threeD.prototype.vupd = function () {
     this.transOut = trans.steps(
       this.transIn.vtx,
       this.transIn.sz,
@@ -149,7 +149,7 @@ var trans = {
     );
   };
 
-  var Build = function() {
+  var Build = function () {
     this.vel = 0.04;
     this.lim = 360;
     this.diff = 200;
@@ -159,7 +159,7 @@ var trans = {
     this.go();
   };
 
-  Build.prototype.go = function() {
+  Build.prototype.go = function () {
     this.canvas = document.getElementById("canv");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -173,15 +173,15 @@ var trans = {
       this.add();
     }
 
-    this.rotObj = {x: 0,y: 0,z: 0};
-    this.objSz = {x: w / 5,y: h / 5,z: w / 5};
+    this.rotObj = { x: 0, y: 0, z: 0 };
+    this.objSz = { x: w / 5, y: h / 5, z: w / 5 };
   };
 
-  Build.prototype.add = function() {
+  Build.prototype.add = function () {
     this.varr.push(new threeD({
-      vtx: {x: rnd(),y: rnd(),z: rnd()},
-      sz: {x: 0,y: 0,z: 0},
-      rot: {x: 20,y: -20,z: 0},
+      vtx: { x: rnd(), y: rnd(), z: rnd() },
+      sz: { x: 0, y: 0, z: 0 },
+      rot: { x: 20, y: -20, z: 0 },
       pos: {
         x: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
         y: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
@@ -195,12 +195,12 @@ var trans = {
     });
   };
 
-  Build.prototype.upd = function() {
+  Build.prototype.upd = function () {
     cam.obj.x += (this.toX - cam.obj.x) * 0.05;
     cam.obj.y += (this.toY - cam.obj.y) * 0.05;
   };
 
-  Build.prototype.draw = function() {
+  Build.prototype.draw = function () {
     this.$.clearRect(0, 0, this.canvas.width, this.canvas.height);
     cam.upd();
     this.rotObj.x += 0.1;
@@ -224,26 +224,26 @@ var trans = {
       this.varr[i].transIn.sz = this.objSz;
       this.varr[i].vupd();
       if (this.varr[i].transOut.p < 0) continue;
-      var g = this.$.createRadialGradient(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p, this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p*2);
+      var g = this.$.createRadialGradient(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p, this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p * 2);
       this.$.globalCompositeOperation = 'lighter';
-       g.addColorStop(0, 'hsla(255, 255%, 255%, 1)');
-        g.addColorStop(.5, 'hsla('+(i+2)+',85%, 40%,1)');
-        g.addColorStop(1,'hsla('+(i)+',85%, 40%,.5)');
-        this.$.fillStyle = g;
+      g.addColorStop(0, 'hsla(255, 255%, 255%, 1)');
+      g.addColorStop(.5, 'hsla(' + (i + 2) + ',85%, 40%,1)');
+      g.addColorStop(1, 'hsla(' + (i) + ',85%, 40%,.5)');
+      this.$.fillStyle = g;
       this.$.beginPath();
       this.$.arc(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p * 2, 0, Math.PI * 2, false);
       this.$.fill();
       this.$.closePath();
     }
   };
-  Build.prototype.anim = function() {
-    window.requestAnimationFrame = (function() {
+  Build.prototype.anim = function () {
+    window.requestAnimationFrame = (function () {
       return window.requestAnimationFrame ||
-        function(callback, element) {
-        window.setTimeout(callback, 1000 / 60);
-      };
+        function (callback, element) {
+          window.setTimeout(callback, 1000 / 60);
+        };
     })();
-    var anim = function() {
+    var anim = function () {
       this.upd();
       this.draw();
       window.requestAnimationFrame(anim);
@@ -251,25 +251,25 @@ var trans = {
     window.requestAnimationFrame(anim);
   };
 
-  Build.prototype.run = function() {
+  Build.prototype.run = function () {
     this.anim();
 
-    window.addEventListener('mousemove', function(e) {
+    window.addEventListener('mousemove', function (e) {
       this.toX = (e.clientX - this.canvas.width / 2) * -0.8;
       this.toY = (e.clientY - this.canvas.height / 2) * 0.8;
     }.bind(this));
-    window.addEventListener('touchmove',function(e){
+    window.addEventListener('touchmove', function (e) {
       this.toX = (e.touches[0].clientX - this.canvas.width / 2) * -0.8;
       this.toY = (e.touches[0].clientY - this.canvas.height / 2) * 0.8;
     }.bind(this));
-    window.addEventListener('mousedown', function(e) {
-      for (var i = 0; i < 100; i++) {
+    window.addEventListener('mousedown', function (e) {
+      for (var i = 0; i < 15; i++) {
         this.add();
       }
     }.bind(this));
-    window.addEventListener('touchstart', function(e) {
+    window.addEventListener('touchstart', function (e) {
       e.preventDefault();
-      for (var i = 0; i < 100; i++) {
+      for (var i = 0; i < num; i++) {
         this.add();
       }
     }.bind(this));
@@ -277,9 +277,9 @@ var trans = {
   var app = new Build();
   app.run();
 })();
-window.addEventListener('resize',function(){
- canvas.width = w = window.innerWidth;
- canvas.height = h = window.innerHeight;
+window.addEventListener('resize', function () {
+  canvas.width = w = window.innerWidth;
+  canvas.height = h = window.innerHeight;
 }, false);
 
 
